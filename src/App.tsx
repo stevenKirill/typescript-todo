@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { FC, useState, MouseEvent } from 'react';
+import { ITodo, TPriority } from './interfaces';
+import Header from './Components/Header';
+import Form from './Components/Form';
+import TodoList from './Components/TodoList';
 import './App.css';
 
-function App() {
+const App: FC = () => {
+  const [todos,setTodos] = useState<ITodo[]>([]);
+
+  const handleAddTodo = (todo: ITodo): void => {
+    setTodos([...todos, todo]);
+  };
+
+  const handleRemove = (id: string): void => {
+    const filtered = todos.filter(todo => todo.id !== id);
+    setTodos(filtered);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Form onAdd={handleAddTodo}/>
+      <TodoList onRemove={handleRemove} todos={todos}/>
     </div>
   );
 }
