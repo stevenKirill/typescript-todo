@@ -1,0 +1,33 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input {
+    padding: 10px;
+    width: 200px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.select {
+    margin-top: 10px;
+    width: 220px;
+    padding: 10px;
+    font-size: 16px;
+}
+.button {
+    width: 220px;
+    text-align: center;
+    background-color: rgb(40, 168, 207);
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-top: 10px;
+    color: white;
+    transition: background-color 0.4s ease;
+}
+.button:hover {
+    background-color: rgb(78, 172, 162);
+}

@@ -1,5 +1,5 @@
-import React, { FC, useState, MouseEvent } from 'react';
-import { ITodo, TPriority } from './interfaces';
+import React, { FC, useState } from 'react';
+import { ITodo } from './interfaces';
 import Header from './Components/Header';
 import Form from './Components/Form';
 import TodoList from './Components/TodoList';
@@ -17,11 +17,25 @@ const App: FC = () => {
     setTodos(filtered);
   };
 
+  const onComplete = (id: string) => {
+    const modified = todos.map((todo: ITodo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          isFinished: !todo.isFinished
+        }
+      }
+      return todo;
+    });
+    setTodos(modified);
+  };
+
   return (
     <div className="App">
       <Header/>
       <Form onAdd={handleAddTodo}/>
-      <TodoList onRemove={handleRemove} todos={todos}/>
+      <br/>
+      <TodoList onRemove={handleRemove} todos={todos} onComplete={onComplete}/>
     </div>
   );
 }

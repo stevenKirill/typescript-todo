@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useState, ChangeEvent } from 'react';
+import React, { FC, useState, ChangeEvent, useEffect, useRef } from 'react';
 import { TPriority, ITodo } from '../interfaces';
 import Select from './Select';
 import classes from '../styles/form.module.css';
@@ -29,12 +29,18 @@ const OPTIONS = [
     }
 ];
 
-const Form: FC = (
-    { onAdd }: Props,
-) => {
+const Form: FC<Props> = ( { onAdd }: Props ) => {
     const [task,setTask] = useState<string>('');
     const [time,setTime]= useState<number>(0);
     const [priority,setPriority] = useState<TPriority>('low');
+    const inputref = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        const { current } = inputref;
+        if (current) {
+            current.focus()
+        };
+    },[])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
@@ -58,28 +64,32 @@ const Form: FC = (
             timeToDo: time,
             id: uuidv4(),
         });
+        // TODO не сбрасываеються значения input
         setTask('');
         setTime(0);
         setPriority('low');
     };
 
     return (
-        <>
-            <input 
+        <div className={classes.form}>
+            <input
+                ref={inputref}
                 type="text"
                 placeholder="имя"
                 name="todoTitle"
                 onChange={handleChange}
+                className={classes.input}
             />
             <input 
                 type="number"
                 placeholder="время"
                 name="timeToDo"
                 onChange={handleChange}
+                className={classes.input}
             />
             <Select options={OPTIONS} onPriority={handleChangePriority}/>
-            <button onClick={hadleSaveTodo}>Создать</button>
-        </>
+            <button onClick={hadleSaveTodo} className={classes.button}>Создать</button>
+        </div>
     );
 };
 

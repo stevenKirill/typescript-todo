@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
+import classes from '../styles/header.module.css';
 
 const Header: FC = () => {
     return (
-        <h2>
+        <h2 className={classes.header}>
             Создайте новое задание
         </h2>
     );
